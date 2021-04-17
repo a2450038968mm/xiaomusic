@@ -2,7 +2,7 @@ import request  from "./http";
 
 
 
-// 获取喜欢
+// 获取喜欢的音乐
 export function getlike(params) {
   return request({
       url:"/likelist",

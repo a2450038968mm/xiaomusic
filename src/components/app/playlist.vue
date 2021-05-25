@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="body">
     <van-popup
       v-model="showlist"
       round
@@ -56,6 +56,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.body{
+  font-size: 24px;
+}
 .close{
   width: 100%;
   text-align: center;

@@ -3,7 +3,11 @@
     <div class="songlist">
       <dl>
         <dt class="newmusic"><span>最新音乐</span></dt>
-        <dd v-for="(item, index) in songslist" :key="index" @click="playmusic(index)">
+        <dd
+          v-for="(item, index) in songslist"
+          :key="index"
+          @click="playmusic(index)"
+        >
           <div class="info">
             <h2>
               {{ item.name
@@ -41,7 +45,7 @@ export default {
   methods: {
     ...mapActions(["playlist"]),
     playmusic(index) {
-      this.playlist({data:this.songslist,index});
+      this.playlist({ data: this.songslist, index });
     },
   },
 };
@@ -108,6 +112,10 @@ export default {
           height: 25px;
           line-height: 25px;
           font-weight: normal;
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
           span {
             display: inline-block;
             margin-left: 5px;

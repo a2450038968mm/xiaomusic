@@ -179,6 +179,7 @@ export default {
     text-align: center;
   }
   .exit {
+    font-size: 24px;
     height: 50px;
     line-height: 50px;
     text-align: center;
@@ -201,6 +202,7 @@ export default {
       line-height: 50px;
       border-radius: 50px;
       text-align: center;
+      font-size: 24px;
       &.con {
         background: #d4473c;
         color: #fff;

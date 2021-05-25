@@ -5,7 +5,7 @@ import router from './router'
 import store from './store'
 import "./assets/css/normalize.css";
 import "vant/lib/index.css";
-import "./assets/font/iconfont.css"
+import "./assets/font/iconfont.css";
 
 Vue.config.productionTip = false
 import "amfe-flexible" 

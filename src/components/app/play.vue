@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="body">
     <!-- <playlist
      
       :showlist="showlist"
@@ -84,52 +84,54 @@
             </ul>
           </div>
         </div>
-        <div class="progressbar">
-          <div class="bar">
-            <span class="thistime">{{ ingtime | timeformat }}</span>
-            <van-slider
-              v-model="ingtime"
-              @drag-start="drag"
-              @change="settime($event)"
-              @drag-end="dragend"
-              active-color="#ee0a24"
-              bar-height="5px"
-              step="1"
-              :max="endtime"
-            >
-              <template #button>
-                <div class="custom-button"></div>
-              </template>
-            </van-slider>
-            <span class="totaltime">{{ endtime | timeformat }}</span>
+        <div class="bottom">
+          <div class="progressbar">
+            <div class="bar">
+              <span class="thistime">{{ ingtime | timeformat }}</span>
+              <van-slider
+                v-model="ingtime"
+                @drag-start="drag"
+                @change="settime($event)"
+                @drag-end="dragend"
+                active-color="#ee0a24"
+                bar-height="5px"
+                step="1"
+                :max="endtime"
+              >
+                <template #button>
+                  <div class="custom-button"></div>
+                </template>
+              </van-slider>
+              <span class="totaltime">{{ endtime | timeformat }}</span>
+            </div>
           </div>
-        </div>
-        <div class="foot">
-          <span
-            :class="[
-              'iconfont',
-              { 'icon-M_xunhuan': playtype == 1 },
-              { 'icon-icon-': playtype == 2 },
-              { 'icon-hanhan-01-01': playtype == 3 },
-            ]"
-            @click="toggerplaytype"
-          ></span>
-          <span class="iconfont icon-shangyishou" @click="upplay1"></span>
-          <span
-            v-show="!play"
-            class="stop iconfont icon-stopfill"
-            @click="togger"
-          ></span>
-          <span
-            v-show="play"
-            class="stop iconfont icon-player-pause-circle"
-            @click="togger"
-          ></span>
-          <span class="iconfont icon-xiayishou" @click="nextplay1"></span>
-          <div class="love">
-            <span class="iconfont icon-xihuan" v-show="!islove"></span>
-            <span class="iconfont icon-xihuan1 red" v-show="islove"></span>
-            <span class="iconfont icon-liebiao" @click="add"></span>
+          <div class="foot">
+            <span
+              :class="[
+                'iconfont',
+                { 'icon-M_xunhuan': playtype == 1 },
+                { 'icon-icon-': playtype == 2 },
+                { 'icon-hanhan-01-01': playtype == 3 },
+              ]"
+              @click="toggerplaytype"
+            ></span>
+            <span class="iconfont icon-shangyishou" @click="upplay1"></span>
+            <span
+              v-show="!play"
+              class="stop iconfont icon-stopfill"
+              @click="togger"
+            ></span>
+            <span
+              v-show="play"
+              class="stop iconfont icon-player-pause-circle"
+              @click="togger"
+            ></span>
+            <span class="iconfont icon-xiayishou" @click="nextplay1"></span>
+            <div class="love">
+              <span class="iconfont icon-xihuan" v-show="!islove"></span>
+              <span class="iconfont icon-xihuan1 red" v-show="islove"></span>
+              <span class="iconfont icon-liebiao" @click="add"></span>
+            </div>
           </div>
         </div>
       </div>
@@ -214,7 +216,10 @@ export default {
     togger() {
       this.nextauto = !this.nextauto;
       console.log(this.$refs.audio.src);
-      if (this.loadend || (this.monitor <= 1 && this.$refs.audio.src.length>0)) {
+      if (
+        this.loadend ||
+        (this.monitor <= 1 && this.$refs.audio.src.length > 0)
+      ) {
         if (this.play) {
           this.$refs.audio.play();
           this.toggercover = true;
@@ -338,6 +343,9 @@ export default {
 
 
 <style lang="less" scoped>
+.body {
+  font-size: 24px;
+}
 .red {
   color: #ee0a24 !important;
 }
@@ -388,10 +396,14 @@ export default {
     }
   }
   .cover {
-    margin-top: 99px;
-    margin-bottom: 126px;
-    height: 666px;
-    width: 666px;
+    // margin-top: 99px;
+    // margin-bottom: 126px;
+    // height: 666px;
+    // width: 666px;
+    box-sizing: border-box;
+    height: 60%;
+    width: 100%;
+    padding: 30% 15%;
     .lyric {
       width: 468px;
       height: 600px;
@@ -438,7 +450,14 @@ export default {
       }
     }
   }
-  .progressbar {
+}
+ .bottom{
+   position: fixed;
+   width: 100%;
+   bottom: 0;
+   left: 0;
+  //  left: 20%;
+    .progressbar {
     text-align: center;
     .bar {
       margin: 0 auto;
@@ -451,7 +470,7 @@ export default {
         color: #efeeed;
       }
       .thistime {
-        left: -70px;
+        left: -80px;
       }
       .totaltime {
         right: -80px;
@@ -489,7 +508,7 @@ export default {
       margin-top: -10px;
     }
   }
-}
+ }
 .playing {
   margin: 0 auto;
   z-index: 1000;
@@ -498,6 +517,7 @@ export default {
   position: fixed;
   display: flex;
   bottom: 0;
+  left: 0;
   background: rgba(255, 255, 255, 0.9);
   .img {
     .play {

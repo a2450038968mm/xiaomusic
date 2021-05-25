@@ -3,7 +3,7 @@ import axios from "axios";
 
 // 创建axios实例化
 const  service = axios.create({
-    baseURL:"http://192.168.54.7:3000",
+    baseURL:"http://39.105.39.45:3000",
     timeout:30000000,//请求超时时间
     headers:{
         "Content-Type":"application/json;charset=UTF-8" //表单数据传递转化
@@ -14,6 +14,7 @@ const  service = axios.create({
 // request 拦截器 发送数据到后台
 service.interceptors.request.use(
     config => {
+        console.log(config);
         return config;
     },
     error =>{

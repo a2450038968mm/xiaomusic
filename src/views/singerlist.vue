@@ -70,9 +70,15 @@ export default {
   },
   components: {},
   created() {
-    setTimeout(() => {
-      this.isload = false;
-    }, 3000);
+    let timer = setInterval(()=>{
+      if(this.isload == false){
+        console.log("完成");
+        clearInterval(timer)
+      }
+    },100)
+    // setTimeout(() => {
+    //   this.isload = false;
+    // }, 3000);
   },
   methods: {
     ...mapActions(["playlist"]),
@@ -84,6 +90,7 @@ export default {
       getSingerlist({ id }).then((data) => {
         this.listdata.artist = data.artist;
         this.listdata.hotSongs = data.hotSongs;
+        this.isload =false
       });
     },
     playmusic(index) {

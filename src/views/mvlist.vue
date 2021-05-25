@@ -6,15 +6,22 @@
         :key="index"
         @click="playmv(index, item.id)"
       >
-      <div class="play" v-show="mvnum != index">
-        <span class="iconfont icon-bofang"></span>
-      </div>
-        <div class="img" v-show="mvnum != index">
-          <img :src="item.cover" alt="" />
-        </div>
-        <video v-if="mvnum == index" autoplay :src="mvurl" @click.stop="stop"></video>
+        <template v-if="item.cover">
+          <div class="play" v-show="mvnum != index">
+            <span class="iconfont icon-bofang"></span>
+          </div>
+          <div class="img" v-show="mvnum != index">
+            <img :src="item.cover" alt="" />
+          </div>
+        </template>
+        <video
+          v-if="mvnum == index"
+          autoplay
+          :src="mvurl"
+          @click.stop="stop"
+        ></video>
         <div class="title">
-          {{item.name}}
+          {{ item.name }}
         </div>
       </li>
     </ul>
@@ -33,32 +40,36 @@ export default {
     };
   },
   methods: {
+    // 获取mv列表
     getmvdata() {
       getMvlist({ limit: 5, offset: this.offset }).then((data) => {
         this.mvlist = data.data;
       });
     },
-    stop(){
-      this.mvurl=null
-      this.mvnum=null
+    // 取消播放
+    stop() {
+      // 链接为空
+      this.mvurl = null;
+      this.mvnum = null;
     },
+    // 监听滚动加载
     handScroll() {
       let scrollTop =
         window.pageYOffset ||
         document.documentElement.scrollTop ||
         document.body.scrollTop; //滚动条偏移量
-      if(this.$refs.ul){
+      if (this.$refs.ul) {
         let lis = this.$refs.ul.getElementsByTagName("li");
         let num = lis.length - 2;
         if (lis[num].offsetTop < scrollTop) {
           this.offset += 1;
           getMvlist({ limit: 5, offset: this.offset }).then((data) => {
-            
-            this.mvlist =this.mvlist.concat(data.data)
+            this.mvlist = this.mvlist.concat(data.data);
           });
         }
       }
     },
+    // 播放mv
     playmv(index, id) {
       this.mvnum = index;
       getMvurl({ id, r: 270 }).then((data) => {
@@ -69,6 +80,7 @@ export default {
   mounted() {
     this.getmvdata();
     this.$nextTick(() => {
+      // 监听滚动条
       window.addEventListener("scroll", this.handScroll);
     });
   },
@@ -85,7 +97,7 @@ ul {
   width: 100%;
   li {
     position: relative;
-    .play{
+    .play {
       width: 80px;
       height: 80px;
       line-height: 80px;
@@ -98,7 +110,7 @@ ul {
       background-color: rgba(0, 0, 0, 0.5);
       border-radius: 50%;
       text-align: center;
-      span{
+      span {
         color: #fff;
         font-size: 30px;
       }

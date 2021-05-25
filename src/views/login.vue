@@ -37,7 +37,9 @@ export default {
   methods: {
     ...mapActions(["logins", "setcookie"]),
     submit() {
+      // 手机号正则
       let reg = /^(13[0-9]|14[5|7]|15[0|1|2|3|4|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;
+      // 密码正则
       let reg1 = /^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&*]+$)[a-zA-Z\d!@#$.%^&*]+$/;
       if (reg.test(this.phone) && reg1.test(this.password)) {
         getlogin({ phone: this.phone, password: this.password }).then(

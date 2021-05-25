@@ -97,6 +97,7 @@ export default {
 }
 
 .remLists {
+  margin-top: 30px;
   .title {
     height: 100px;
     line-height: 100px;

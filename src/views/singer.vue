@@ -22,7 +22,7 @@
               v-for="(val, key) in item.data"
               :key="key"
               @click="gosingerlist(val.id)"
-              v-lazy="val"
+              
             >
               <div class="img">
                 <!-- <img
@@ -57,7 +57,7 @@ import BScroll from "@better-scroll/core";
 export default {
   data() {
     return {
-      str: '"artist/list?type=1&area=96&limit=10&initial="',
+      str: '"artist/list?type=1&area=96&limit=5&initial="',
       isload: true,
       list: [
         "re",
@@ -100,7 +100,7 @@ export default {
     this.getArtistListsFun();
     setTimeout(() => {
       (this.isload = false), this.initOnce();
-    }, 4000);
+    }, 2000);
   },
   methods: {
     initOnce() {
@@ -125,18 +125,21 @@ export default {
         });
       }
     },
+    // 获取热门歌手
     getTopArtistListsFun() {
       getBanner("top/artists?offset=0&limit=5").then((data) => {
         this.artistsList.splice(0, 1, { name: "re", data });
       });
     },
+    // 获取名字首字母信息
     getArtistListsFun() {
       for (let key in this.artistsList) {
         let str =
-          "artist/list?type=1&area=96&limit=10&initial=" +
+          "artist/list?type=1&area=96&limit=5&initial=" +
           this.artistsList[key].name;
         if (this.artistsList[key].name == "re") {
           getBanner("top/artists?offset=0&limit=5").then((data) => {
+            console.log(data);
             this.$set(this.artistsList[key], "data", data.artists);
           });
         } else {
@@ -145,9 +148,9 @@ export default {
           });
         }
       }
-      console.log(this.artistsList);
+      // console.log(this.artistsList);
     },
-
+    // bscroll插件
     _initScoroll() {
       this.sin = null;
       this.sin = new BScroll(this.$refs.left, {
@@ -158,6 +161,7 @@ export default {
         this.scrollY = Math.abs(Math.round(pos.y));
       });
     },
+    // 获取内容高度
     _getHeight() {
       let sinItems = this.$refs.left.getElementsByClassName("sing_item");
       let height = 0;
@@ -168,6 +172,7 @@ export default {
         this.listsHeight.push(height);
       }
     },
+    // 点击字母跳转
     selectItem(index) {
       // console.log(index);
       let sinItems = this.$refs.left.getElementsByClassName("sing_item");
@@ -179,6 +184,7 @@ export default {
   watch: {},
   Updated() {},
   computed: {
+    // 判断当前歌手的首字母
     currentIndex() {
       for (let i = 0; i < this.listsHeight.length; i++) {
         let height = this.listsHeight[i];
@@ -244,6 +250,7 @@ export default {
 .separate {
   height: 0.5469rem;
   line-height: 0.5469rem;
+  font-size: 0.3125rem;
   background: #dadbdc;
   text-indent: 0.2344rem;
   color: white;

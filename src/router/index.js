@@ -50,9 +50,7 @@ const routes = [
       isopen: true,
     },
     beforeEnter: (to, from, next) => {
-      // ...
       let login = store.state.login || window.localStorage.getItem("login");
-      // console.log(login);
       if(login){
         next("/user")
         return
